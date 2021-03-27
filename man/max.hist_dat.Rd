@@ -4,10 +4,12 @@
 \alias{max.hist_dat}
 \title{The maximum value in a histogram dataset}
 \usage{
-\method{max}{hist_dat}(his, na.rm)
+\method{max}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments to pass to \code{max()}}
 }
 \value{
 A numeric of length 1

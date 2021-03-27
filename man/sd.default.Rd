@@ -6,6 +6,11 @@
 \usage{
 \method{sd}{default}(x, ...)
 }
+\arguments{
+\item{x}{The data to calculate the standard deviation of}
+
+\item{...}{Additional arguments to pass to the \code{var} function}
+}
 \description{
 Default implementation of the sd generic, to provide backwards compatibility
 }

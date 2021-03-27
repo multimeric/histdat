@@ -4,10 +4,12 @@
 \alias{range.hist_dat}
 \title{The range of values in a histogram dataset}
 \usage{
-\method{range}{hist_dat}(his, ...)
+\method{range}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments to pass to \code{range()}}
 }
 \value{
 A numeric of length 2, indicating the minimum and maximum value

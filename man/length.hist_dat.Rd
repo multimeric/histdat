@@ -4,10 +4,12 @@
 \alias{length.hist_dat}
 \title{The number of values in a histogram dataset}
 \usage{
-\method{length}{hist_dat}(his, na.rm)
+\method{length}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments that will be ignored}
 }
 \value{
 A numeric of length 1

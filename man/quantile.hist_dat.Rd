@@ -4,10 +4,12 @@
 \alias{quantile.hist_dat}
 \title{Calculates one or more empirical quantiles of the dataset}
 \usage{
-\method{quantile}{hist_dat}(his, ...)
+\method{quantile}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments to pass to \code{quantile()}}
 }
 \value{
 A numeric with the same length as the probs parameter

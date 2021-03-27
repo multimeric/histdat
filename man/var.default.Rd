@@ -6,6 +6,11 @@
 \usage{
 \method{var}{default}(x, ...)
 }
+\arguments{
+\item{x}{The data to calculate the variance of}
+
+\item{...}{Additional arguments to pass to \code{stats::var()}}
+}
 \description{
 Default implementation of the var generic, to provide backwards compatibility
 }

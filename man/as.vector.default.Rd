@@ -6,6 +6,9 @@
 \usage{
 \method{as.vector}{default}(x)
 }
+\arguments{
+\item{x}{The object to convert to a vector}
+}
 \description{
 Default implementation of the as.vector generic, to provide backwards compatibility
 }

@@ -6,6 +6,9 @@
 \usage{
 \method{as.ecdf}{default}(x)
 }
+\arguments{
+\item{x}{The object to convert to an eCDF}
+}
 \description{
 Default implementation of the as.ecdf generic, to provide backwards compatibility
 }

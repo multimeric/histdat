@@ -4,10 +4,12 @@
 \alias{sum.hist_dat}
 \title{Sum of all values in a histogram dataset}
 \usage{
-\method{sum}{hist_dat}(his, ...)
+\method{sum}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments to pass to \code{sum()}}
 }
 \value{
 A numeric of length 1

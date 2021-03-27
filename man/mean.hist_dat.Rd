@@ -4,10 +4,12 @@
 \alias{mean.hist_dat}
 \title{The mean value in a histogram dataset}
 \usage{
-\method{mean}{hist_dat}(his)
+\method{mean}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments that will be ignored}
 }
 \value{
 A numeric of length 1

@@ -5,10 +5,10 @@
 \title{Convert this histogram to a vector. Not recommended if there are many counts
 as this would result in an incredibly long vector}
 \usage{
-\method{as.vector}{hist_dat}(his, ...)
+\method{as.vector}{hist_dat}(x)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
 }
 \description{
 Convert this histogram to a vector. Not recommended if there are many counts

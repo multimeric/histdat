@@ -4,10 +4,10 @@
 \alias{var.hist_dat}
 \title{The variance of a histogram dataset}
 \usage{
-\method{var}{hist_dat}(his)
+\method{var}{hist_dat}(x)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
 }
 \value{
 A numeric of length 1

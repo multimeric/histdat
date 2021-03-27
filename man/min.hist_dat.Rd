@@ -4,10 +4,12 @@
 \alias{min.hist_dat}
 \title{The minimum value in a histogram dataset}
 \usage{
-\method{min}{hist_dat}(his, na.rm)
+\method{min}{hist_dat}(x, ...)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
+
+\item{...}{Additional arguments to pass to \code{min()}}
 }
 \value{
 A numeric of length 1

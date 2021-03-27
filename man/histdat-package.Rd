@@ -4,26 +4,49 @@
 \name{histdat-package}
 \alias{histdat-package}
 \title{histdat: Summary statistics for histogram/count data}
+\description{
+In some cases you will have data in a "histogram" format, where
+you have a vector of all possible observations, and a vector of how many
+times each observation appeared. You could expand this into a single 1D
+vector, but this may not be advisable if the counts are extremely large.
+\code{histdat} allows for the calculation of summary statistics without the need
+for expanding your data.
+}
 \section{Constructor function}{
-\code{\link[=hist_dat]{hist_dat()}}
+\itemize{
+\item \code{\link[=hist_dat]{hist_dat()}}
+}
 }
 
 \section{\code{hist_stat} Statistics}{
-\code{\link[=length.hist_dat]{length.hist_dat()}}, \code{\link[=max.hist_dat]{max.hist_dat()}}, \code{\link[=min.hist_dat]{min.hist_dat()}}, \code{\link[=range.hist_dat]{range.hist_dat()}},
-
-\code{\link[=median.hist_dat]{median.hist_dat()}}, \code{\link[=mean.hist_dat]{mean.hist_dat()}}, \code{\link[=var.hist_dat]{var.hist_dat()}}, \code{\link[=sd.hist_dat]{sd.hist_dat()}},
-
-\code{\link[=sum.hist_dat]{sum.hist_dat()}}, \code{\link[=quantile.hist_dat]{quantile.hist_dat()}}, \code{\link[=as.ecdf.hist_dat]{as.ecdf.hist_dat()}}
+\itemize{
+\item \code{\link[=length.hist_dat]{length.hist_dat()}}
+\item \code{\link[=max.hist_dat]{max.hist_dat()}}
+\item \code{\link[=min.hist_dat]{min.hist_dat()}}
+\item \code{\link[=range.hist_dat]{range.hist_dat()}},
+\item \code{\link[=median.hist_dat]{median.hist_dat()}}
+\item \code{\link[=mean.hist_dat]{mean.hist_dat()}}
+\item \code{\link[=var.hist_dat]{var.hist_dat()}}
+\item \code{sd.hist_dat()} (indirectly, via \code{\link[=var.hist_dat]{var.hist_dat()}})
+\item \code{\link[=sum.hist_dat]{sum.hist_dat()}}
+\item \code{\link[=quantile.hist_dat]{quantile.hist_dat()}}
+\item \code{\link[=as.ecdf.hist_dat]{as.ecdf.hist_dat()}}
+}
 }
 
 \section{\code{hist_dat} Utilities}{
-\code{\link[=as.vector.hist_dat]{as.vector.hist_dat()}}
+\itemize{
+\item \code{\link[=as.vector.hist_dat]{as.vector.hist_dat()}}
+}
 }
 
 \section{Generic Stats}{
 Generic stat functions that can be used equally on \code{hist_dat}, and regular
 numeric vectors:
-
-\code{\link[=var]{var()}}, \code{\link[=sd]{sd()}}, \code{\link[=as.ecdf]{as.ecdf()}}
+\itemize{
+\item \code{\link[=var]{var()}}
+\item \code{\link[=sd]{sd()}}
+\item \code{\link[=as.ecdf]{as.ecdf()}}
+}
 }
 

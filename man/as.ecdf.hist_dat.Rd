@@ -5,10 +5,10 @@
 \title{Convert this histogram to an instance of the "ecdf" class, allowing the
 calculation of cumulative densities, and quantiles}
 \usage{
-\method{as.ecdf}{hist_dat}(his)
+\method{as.ecdf}{hist_dat}(x)
 }
 \arguments{
-\item{his}{An instance of the class his_dat}
+\item{x}{An instance of the class his_dat}
 }
 \description{
 Convert this histogram to an instance of the "ecdf" class, allowing the
