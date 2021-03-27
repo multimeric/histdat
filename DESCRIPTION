@@ -1,0 +1,23 @@
+Package: histdat
+Type: Package
+Title: Summary statistics for histogram/count data
+Version: 0.1.0
+Author: Michael Milton
+Maintainer: Michael Milton <michael.r.milton@gmail.com>
+Description: In some cases you will have data in a "histogram" format, where
+  you have a vector of all possible observations, and a vector of how many
+  times each observation appeared. You could expand this into a single 1D
+  vector, but this may not be advisable if the counts are extremely large.
+  `histdat` allows for the calculation of summary statistics without the need
+  for expanding your data
+License: GPLv3
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr

@@ -1,0 +1,52 @@
+---
+title: "histdat"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{histdat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+First we need to import the package:
+```{r setup}
+library(histdat)
+```
+
+
+Now, let's say that we have seen the number one 10,000 times, the number two 20,000 times etc.
+
+If we turned this into a single vector with the true number of each observation,
+we would have a vector of length 60,000! That would use a lot of RAM, and we
+don't really need to do that
+
+```{r}
+h = hist_dat(
+  vals = 1:4,
+  counts = c(10000, 20000, 20000, 10000)
+)
+```
+
+Now let's calculate some summary statistics, without using RAM we don't need!
+```{r}
+mean(h)
+min(h)
+length(h)
+median(h)
+```
+
+We actually *can* convert a `hist_dat` object into a 1-D vector, which is 
+reasonable if we only have a small number of counts:
+```{r}
+h = hist_dat(
+  vals = 1:4,
+  counts = c(1, 2, 2, 1)
+)
+as.vector(h)
+```
