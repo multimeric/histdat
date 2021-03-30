@@ -3,13 +3,13 @@
 \docType{package}
 \name{histdat-package}
 \alias{histdat-package}
-\title{histdat: Summary statistics for histogram/count data}
+\title{'histdat': Summary statistics for histogram/count data}
 \description{
 In some cases you will have data in a "histogram" format, where
 you have a vector of all possible observations, and a vector of how many
 times each observation appeared. You could expand this into a single 1D
 vector, but this may not be advisable if the counts are extremely large.
-\code{histdat} allows for the calculation of summary statistics without the need
+'histdat' allows for the calculation of summary statistics without the need
 for expanding your data.
 }
 \section{Constructor function}{

@@ -5,7 +5,7 @@
 \title{Calculates the sample variance of a dataset. This is a generic version of
 the core \code{var} function.}
 \usage{
-var(x)
+var(x, y = NULL, na.rm = FALSE, use)
 }
 \arguments{
 \item{x}{The dataset to calculate the variance of. Can be a vector or any
