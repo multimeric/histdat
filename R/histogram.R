@@ -1,84 +1,46 @@
-#' histdat: Summary statistics for histogram/count data
-#'
+#' 'HistDat': Summary statistics for histogram/count data
 #'
 #' @description
 #' In some cases you will have data in a "histogram" format, where
 #' you have a vector of all possible observations, and a vector of how many
 #' times each observation appeared. You could expand this into a single 1D
 #' vector, but this may not be advisable if the counts are extremely large.
-#' `histdat` allows for the calculation of summary statistics without the need
+#' 'HistDat' allows for the calculation of summary statistics without the need
 #' for expanding your data.
 #'
 #' @details
-#' # Constructor function
-#' * [hist_dat()]
+#' # Class Definition / Constructor Function
+#' * [HistDat-class]
 #'
 #' @details
-#' # `hist_stat` Statistics
-#' * [length.hist_dat()]
-#' * [max.hist_dat()]
-#' * [min.hist_dat()]
-#' * [range.hist_dat()],
-#' * [median.hist_dat()]
-#' * [mean.hist_dat()]
-#' * [var.hist_dat()]
-#' * `sd.hist_dat()` (indirectly, via [var.hist_dat()])
-#' * [sum.hist_dat()]
-#' * [quantile.hist_dat()]
-#' * [as.ecdf.hist_dat()]
+#' # `HistDat` Statistics
+#' * [length,HistDat-method]
+#' * [max,HistDat-method]
+#' * [min,HistDat-method]
+#' * [range,HistDat-method],
+#' * [median,HistDat-method]
+#' * [mean,HistDat-method]
+#' * [var,HistDat-method]
+#' * [sd,HistDat-method]
+#' * [sum,HistDat-method]
+#' * [quantile,HistDat-method]
+#' * [as.ecdf,HistDat-method]
 #'
 #' @details
-#' # `hist_dat` Utilities
-#' * [as.vector.hist_dat()]
+#' # `HistDat` Utilities
+#' * [as.vector,HistDat-method]
 #'
 #' @details
-#' # Generic Stats
-#' Generic stat functions that can be used equally on `hist_dat`, and regular
-#' numeric vectors:
-#' * [var()]
-#' * [sd()]
-#' * [as.ecdf()]
-#'
+#' Note that all the methods described for `HistDat` instances have been
+#' transformed into generic methods in this package where they are not already,
+#' with default implementations for general numeric vectors. This allows you
+#' to equally apply these same functions to any type of data.
 #'
 #' @docType package
-#' @name histdat-package
+#' @name HistDat-package
 #' @import stats
 #' @import methods
 NULL
-
-#' Calculates the sample variance of a dataset. This is a generic version of
-#' the core `var` function.
-#'
-#' @param x The dataset to calculate the variance of. Can be a vector or any
-#' other type implementing the var generic
-#'
-#' @return A length 1 vector holding the variance
-#' @export
-#'
-#' @examples var(c(1, 2, 3))
-var <- function(x) UseMethod("var")
-
-#' Calculates the sample standard deviation of a dataset.
-#' This is a generic version of  the core `sd` function.
-#'
-#' @param x The dataset to calculate the standard deviation of.
-#' Can be a vector or any other type implementing the var generic
-#'
-#' @return A length 1 vector holding the standard deviation
-#' @export
-#'
-#' @examples sd(c(1, 2, 3))
-sd <- function(x) UseMethod("sd")
-
-#' Converts an object to a vector.
-#' This is a generic version of the core `as.vector` function
-#'
-#' @param x The object to coerce to a vector
-#'
-#' @return A vector
-#' @export
-#'
-as.vector <- function(x) UseMethod("as.vector")
 
 #' Converts an object to an empirical cumulative density function.
 #' This is a generic function.
@@ -87,196 +49,215 @@ as.vector <- function(x) UseMethod("as.vector")
 #'
 #' @return An instance of the "ecdf" class
 #' @seealso [ecdf()]
+#' @examples
+#' cdf <- as.ecdf(1:4)
+#' cdf(2) # returns 0.5
 #' @export
-#'
-as.ecdf <- function(x) UseMethod("as.ecdf")
+methods::setGeneric("as.ecdf", def = stats::ecdf)
 
-#' S3 class for histogram data
-#'
-#' @param vals A vector of observations
-#' @param counts A vector of counts, each of which corresponds to the same
+#' S4 class for histogram data
+#' @slot vals A vector of observations
+#' @slot counts A vector of counts, each of which corresponds to the same
 #' index in the vals parameter
-#'
-#' @return An instance of the hist_dat class
+#' @examples
+#' hd <- new("HistDat", vals = 1:3, counts = c(1, 2, 1))
+#' length(hd) # returns 4
 #' @export
-hist_dat = function(vals, counts){
-  if (!is(vals, 'numeric')){
-    stop('The vals parameter must be a numeric vector')
-  }
-  if (!is(counts, 'numeric')){
-    stop('The counts parameter must be a numeric vector')
-  }
-  if (length(vals) != length(counts)){
-    stop('The counts parameter and the vals parameter must be the same length')
+HistDat <- methods::setClass("HistDat", representation(
+  vals = "numeric",
+  counts = "numeric"
+), validity = function(object) {
+  errors <- NULL
+  if (length(object@vals) != length(object@counts)) {
+    errors <- c(errors, "The length of vals and counts must be the same")
   }
 
-  env = new.env()
+  if (length(errors) > 0) {
+    errors
+  }
+  else {
+    TRUE
+  }
+})
 
-  # Sort by value, then use the corresponding indices to get the corresponding
-  # counts
-  sorted = sort(vals, index.return=T)
-  env$vals = sorted$x
-  env$counts = counts[sorted$ix]
-
-  structure(env, class='hist_dat')
-}
-
-#' Sum of all values in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
+#' Sum of all observations in the histogram dataset
+#' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `sum()`
-#'
-#' @return A numeric of length 1
+#' @param na.rm Passed verbatim to [base::sum()]
+#' @return A numeric of length 1, holding the sum of all values in the dataset
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' sum(hd) # returns 8
 #' @export
-sum.hist_dat = function(x, ...){
-  sum(x$vals * x$counts, ...)
-}
+setMethod("sum", signature(x = "HistDat"), function(x, ...) {
+  sum(x@vals * x@counts, ...)
+})
 
-#' The number of values in a histogram dataset
+#' The total number of observations in a histogram dataset
 #'
-#' @param x An instance of the class his_dat
-#' @param ... Additional arguments that will be ignored
+#' @param x An instance of the class HistDat
 #'
-#' @return A numeric of length 1
+#' @return A numeric of length 1, holding the number of observations in the
+#' dataset
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' length(hd) # returns 4
 #' @export
-length.hist_dat = function(x, ...){
-  sum(x$counts)
-}
+setMethod("length", signature(x = "HistDat"), function(x) {
+  sum(x@counts)
+})
 
-#' The mean value in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
+#' The mean value of all observations in the histogram dataset
+#' @param x An instance of the class HistDat
 #' @param ... Additional arguments that will be ignored
-#'
-#' @return A numeric of length 1
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' mean(hd) # returns 2
+#' @return A numeric of length 1, holding the mean of the observationsin the
+#' dataset
 #' @export
-mean.hist_dat = function(x, ...){
+setMethod("mean", signature(x = "HistDat"), function(x, ...) {
   sum(x) / length(x)
-}
+})
 
-#' The variance of a histogram dataset
-#'
-#' @param x An instance of the class his_dat
-#'
-#' @return A numeric of length 1
+#' The variance of observations in the histogram dataset
+#' @param x An instance of the class HistDat
+#' @param y Provided for compatibility with [stats::var()], but ignored
+#' @param na.rm Provided for compatibility with [stats::var()], but ignored
+#' @param use Provided for compatibility with [stats::var()], but ignored
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' var(hd) # returns 0.6666667
+#' @return A numeric of length 1, holding the variance of all observations in
+#' the dataset
 #' @export
-var.hist_dat = function(x){
-  num = sum((x$vals - mean(x))^2 * x$counts)
-  denom = length(x) - 1
+setMethod("var", signature(x = "HistDat"), function(x, y, na.rm, use) {
+  num <- sum((x@vals - mean(x))^2 * x@counts)
+  denom <- length(x) - 1
   num / denom
-}
+})
 
-#' The minimum value in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
-#' @param ... Additional arguments to pass to `min()`
-#'
-#' @return A numeric of length 1
+#' The standard deviation of the observations in the histogram dataset
+#' @param x An instance of the class HistDat
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' sd(hd) # returns 0.8164966
+#' @return A numeric of length 1, holding the standard deviation of all
+#' observations in the dataset
 #' @export
-min.hist_dat = function(x, ...){
-  min(x$vals, ...)
-}
+setMethod("sd", signature(x = "HistDat"), function(x) {
+  sqrt(var(x))
+})
 
-#' The maximum value in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
-#' @param ... Additional arguments to pass to `max()`
-#'
-#' @return A numeric of length 1
+#' The smallest observation in the histogram dataset
+#' @param x An instance of the class HistDat
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' min(hd) # returns 1
+#' @param na.rm Passed verbatim to [base::min()]
+#' @param ... Passed verbatim to [base::min()]
+#' @return A numeric of length 1, holding the smallest observation in the
+#' dataset
 #' @export
-max.hist_dat = function(x, ...){
-  max(x$vals, ...)
-}
+setMethod("min", signature(x = "HistDat"), function(x, ...) {
+  min(x@vals, ...)
+})
 
-#' The median value in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
+#' The largest observation in the histogram dataset
+#' @param x An instance of the class HistDat
+#' @param na.rm Passed verbatim to [base::max()]
+#' @param ... Passed verbatim to [base::max()]
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' max(hd) # returns 3
+#' @return A numeric of length 1, holding the largest observation in the dataset
+#' @export
+setMethod("max", signature(x = "HistDat"), function(x, ...) {
+  max(x@vals, ...)
+})
+
+#' The median value of the observations in the histogram dataset
+#' @param x An instance of the class HistDat
+#' @param na.rm Provided for compatibility with [stats::median()], but ignored
 #' @param ... Additional arguments that will be ignored
-#'
-#' @return A numeric of length 1
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' median(hd) # returns 2
+#' @return A numeric of length 1, holding the median value of the observations
+#' in the histogram dataset
 #' @export
-median.hist_dat = function(x, ...){
-  quantile(x, probs=0.5, names=F)
-}
+setMethod("median", signature(x = "HistDat"), function(x, ...) {
+  quantile(x, probs = 0.5, names = F)
+})
 
-#' The range of values in a histogram dataset
-#'
-#' @param x An instance of the class his_dat
+#' The range of values of the observations in the histogram dataset
+#' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `range()`
-#'
-#' @return A numeric of length 2, indicating the minimum and maximum value
+#' @param na.rm Passed verbatim to [base::range()]
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' range(hd) # returns 1 3
+#' @return A numeric of length 2, indicating the minimum and maximum value of
+#' the observations
 #' @export
-range.hist_dat = function(x, ...){
-  range(x$vals, ...)
-}
+setMethod("range", signature(x = "HistDat"), function(x, ...) {
+  range(x@vals, ...)
+})
 
 #' Calculates one or more empirical quantiles of the dataset
-#'
-#' @param x An instance of the class his_dat
+#' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `quantile()`
-#'
-#' @return A numeric with the same length as the probs parameter
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' quantile(hd, 0.2) # returns 1.6
+#' @return A numeric with the same length as the probs parameter, holding the
+#' quantile corresponding to each provided probability
 #' @export
-quantile.hist_dat = function(x, ...){
-  cdf = as.ecdf(x)
+setMethod("quantile", signature(x = "HistDat"), function(x, ...) {
+  cdf <- as.ecdf(x)
   quantile(cdf, ...)
-}
+})
 
 #' Convert this histogram to a vector. Not recommended if there are many counts
 #' as this would result in an incredibly long vector
 #'
-#' @param x An instance of the class his_dat
+#' @param x An instance of the class HistDat
 #'
+#' @return A vector with the same `length` as `x`, but as a 1-D vector with
+#' an element for each count in the counts vector. In other words, all
+#' `length(x)` observations will be represented as a single element instead of
+#' being just counted as in the original HistDat object.
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' as.vector(hd) # returns 1 2 2 3
 #' @export
 #'
-as.vector.hist_dat = function(x){
-  rep(x$vals, x$counts)
-}
+setMethod("as.vector", signature(x = "HistDat"), function(x) {
+  rep(x@vals, x@counts)
+})
 
 #' Convert this histogram to an instance of the "ecdf" class, allowing the
 #' calculation of cumulative densities, and quantiles
 #'
-#' @param x An instance of the class his_dat
+#' @param x An instance of the class HistDat
+#'
+#' @return An instance of the `ecdf` class. It can be invoked as a function to
+#' return the cumulative proportion of the count data less than or equal to
+#' `x`.
 #'
 #' @export
 #'
-as.ecdf.hist_dat = function(x){
-  st = stepfun(
-    x=x$vals,
-    y=c(0, cumsum(x$counts))/length(x),
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' cdf <- as.ecdf(hd)
+#' cdf(2) # returns 0.75
+setMethod("as.ecdf", signature(x = "HistDat"), function(x) {
+  st <- stepfun(
+    x = x@vals,
+    y = c(0, cumsum(x@counts)) / length(x),
     right = F
   )
-  class(st) = c('ecdf', class(st))
+  class(st) <- c("ecdf", class(st))
   assign("nobs", length(x), envir = environment(st))
   st
-}
-
-#' Default implementation of the var generic, to provide backwards compatibility
-#' @export
-#' @param x The data to calculate the variance of
-#' @param ... Additional arguments to pass to `stats::var()`
-var.default = function(x, ...){
-  stats::var(x, ...)
-}
-
-#' Default implementation of the as.ecdf generic, to provide backwards compatibility
-#' @export
-#' @param x The object to convert to an eCDF
-as.ecdf.default = function(x){
-  ecdf(x)
-}
-
-#' Default implementation of the as.vector generic, to provide backwards compatibility
-#' @export
-#' @param x The object to convert to a vector
-as.vector.default = function(x){
-  base::as.vector(x)
-}
-
-#' Default implementation of the sd generic, to provide backwards compatibility
-#' @export
-#' @param x The data to calculate the standard deviation of
-#' @param ... Additional arguments to pass to the `var` function
-sd.default = function(x, ...){
-  sqrt(var(x, ...))
-}
+})

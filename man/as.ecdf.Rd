@@ -17,6 +17,10 @@ An instance of the "ecdf" class
 Converts an object to an empirical cumulative density function.
 This is a generic function.
 }
+\examples{
+cdf <- as.ecdf(1:4)
+cdf(2) # returns 0.5
+}
 \seealso{
 \code{\link[=ecdf]{ecdf()}}
 }
