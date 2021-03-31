@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{range,HistDat-method}
 \alias{range,HistDat-method}
-\title{The range of values of the observations in the histogram dataset}
+\title{Calculates the range of values of the observations in the histogram dataset}
 \usage{
 \S4method{range}{HistDat}(x, ..., na.rm = FALSE)
 }
@@ -18,7 +18,7 @@ A numeric of length 2, indicating the minimum and maximum value of
 the observations
 }
 \description{
-The range of values of the observations in the histogram dataset
+Calculates the range of values of the observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{sd,HistDat-method}
 \alias{sd,HistDat-method}
-\title{The standard deviation of the observations in the histogram dataset}
+\title{Calculates the standard deviation of the observations in the histogram dataset}
 \usage{
 \S4method{sd}{HistDat}(x)
 }
@@ -14,7 +14,7 @@ A numeric of length 1, holding the standard deviation of all
 observations in the dataset
 }
 \description{
-The standard deviation of the observations in the histogram dataset
+Calculates the standard deviation of the observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

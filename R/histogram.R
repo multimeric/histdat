@@ -61,6 +61,7 @@ methods::setGeneric("as.ecdf", def = stats::ecdf)
 #' index in the vals parameter
 #' @examples
 #' hd <- new("HistDat", vals = 1:3, counts = c(1, 2, 1))
+#' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
 #' length(hd) # returns 4
 #' @export
 HistDat <- methods::setClass("HistDat", representation(
@@ -80,7 +81,7 @@ HistDat <- methods::setClass("HistDat", representation(
   }
 })
 
-#' Sum of all observations in the histogram dataset
+#' Calculates the sum of all observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `sum()`
 #' @param na.rm Passed verbatim to [base::sum()]
@@ -93,7 +94,7 @@ setMethod("sum", signature(x = "HistDat"), function(x, ...) {
   sum(x@vals * x@counts, ...)
 })
 
-#' The total number of observations in a histogram dataset
+#' Calculates the total number of observations in a histogram dataset
 #'
 #' @param x An instance of the class HistDat
 #'
@@ -107,20 +108,20 @@ setMethod("length", signature(x = "HistDat"), function(x) {
   sum(x@counts)
 })
 
-#' The mean value of all observations in the histogram dataset
+#' Calculates the mean value of all observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param ... Additional arguments that will be ignored
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' mean(hd) # returns 2
-#' @return A numeric of length 1, holding the mean of the observationsin the
+#' @return A numeric of length 1, holding the mean of the observations in the
 #' dataset
 #' @export
 setMethod("mean", signature(x = "HistDat"), function(x, ...) {
   sum(x) / length(x)
 })
 
-#' The variance of observations in the histogram dataset
+#' Calculates the variance of observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param y Provided for compatibility with [stats::var()], but ignored
 #' @param na.rm Provided for compatibility with [stats::var()], but ignored
@@ -137,7 +138,7 @@ setMethod("var", signature(x = "HistDat"), function(x, y, na.rm, use) {
   num / denom
 })
 
-#' The standard deviation of the observations in the histogram dataset
+#' Calculates the standard deviation of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
@@ -149,7 +150,7 @@ setMethod("sd", signature(x = "HistDat"), function(x) {
   sqrt(var(x))
 })
 
-#' The smallest observation in the histogram dataset
+#' Calculates the smallest observation in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
@@ -163,7 +164,7 @@ setMethod("min", signature(x = "HistDat"), function(x, ...) {
   min(x@vals, ...)
 })
 
-#' The largest observation in the histogram dataset
+#' Calculates the largest observation in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param na.rm Passed verbatim to [base::max()]
 #' @param ... Passed verbatim to [base::max()]
@@ -176,7 +177,7 @@ setMethod("max", signature(x = "HistDat"), function(x, ...) {
   max(x@vals, ...)
 })
 
-#' The median value of the observations in the histogram dataset
+#' Calculates the median value of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param na.rm Provided for compatibility with [stats::median()], but ignored
 #' @param ... Additional arguments that will be ignored
@@ -190,7 +191,7 @@ setMethod("median", signature(x = "HistDat"), function(x, ...) {
   quantile(x, probs = 0.5, names = F)
 })
 
-#' The range of values of the observations in the histogram dataset
+#' Calculates the range of values of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `range()`
 #' @param na.rm Passed verbatim to [base::range()]
@@ -218,7 +219,7 @@ setMethod("quantile", signature(x = "HistDat"), function(x, ...) {
   quantile(cdf, ...)
 })
 
-#' Convert this histogram to a vector. Not recommended if there are many counts
+#' Converts this histogram to a vector. Not recommended if there are many counts
 #' as this would result in an incredibly long vector
 #'
 #' @param x An instance of the class HistDat
@@ -236,7 +237,7 @@ setMethod("as.vector", signature(x = "HistDat"), function(x) {
   rep(x@vals, x@counts)
 })
 
-#' Convert this histogram to an instance of the "ecdf" class, allowing the
+#' Converts this histogram to an instance of the "ecdf" class, allowing the
 #' calculation of cumulative densities, and quantiles
 #'
 #' @param x An instance of the class HistDat

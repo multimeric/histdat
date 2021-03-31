@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{as.vector,HistDat-method}
 \alias{as.vector,HistDat-method}
-\title{Convert this histogram to a vector. Not recommended if there are many counts
+\title{Converts this histogram to a vector. Not recommended if there are many counts
 as this would result in an incredibly long vector}
 \usage{
 \S4method{as.vector}{HistDat}(x)
@@ -17,7 +17,7 @@ an element for each count in the counts vector. In other words, all
 being just counted as in the original HistDat object.
 }
 \description{
-Convert this histogram to a vector. Not recommended if there are many counts
+Converts this histogram to a vector. Not recommended if there are many counts
 as this would result in an incredibly long vector
 }
 \examples{

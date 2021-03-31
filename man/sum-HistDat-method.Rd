@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{sum,HistDat-method}
 \alias{sum,HistDat-method}
-\title{Sum of all observations in the histogram dataset}
+\title{Calculates the sum of all observations in the histogram dataset}
 \usage{
 \S4method{sum}{HistDat}(x, ..., na.rm = FALSE)
 }
@@ -17,7 +17,7 @@
 A numeric of length 1, holding the sum of all values in the dataset
 }
 \description{
-Sum of all observations in the histogram dataset
+Calculates the sum of all observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

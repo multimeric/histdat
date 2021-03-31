@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{median,HistDat-method}
 \alias{median,HistDat-method}
-\title{The median value of the observations in the histogram dataset}
+\title{Calculates the median value of the observations in the histogram dataset}
 \usage{
 \S4method{median}{HistDat}(x, na.rm = FALSE, ...)
 }
@@ -18,7 +18,7 @@ A numeric of length 1, holding the median value of the observations
 in the histogram dataset
 }
 \description{
-The median value of the observations in the histogram dataset
+Calculates the median value of the observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{max,HistDat-method}
 \alias{max,HistDat-method}
-\title{The largest observation in the histogram dataset}
+\title{Calculates the largest observation in the histogram dataset}
 \usage{
 \S4method{max}{HistDat}(x, ..., na.rm = FALSE)
 }
@@ -17,7 +17,7 @@
 A numeric of length 1, holding the largest observation in the dataset
 }
 \description{
-The largest observation in the histogram dataset
+Calculates the largest observation in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

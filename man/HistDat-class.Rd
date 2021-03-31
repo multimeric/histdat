@@ -19,5 +19,6 @@ index in the vals parameter}
 
 \examples{
 hd <- new("HistDat", vals = 1:3, counts = c(1, 2, 1))
+hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
 length(hd) # returns 4
 }

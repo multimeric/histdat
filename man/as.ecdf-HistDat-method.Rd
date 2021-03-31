@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{as.ecdf,HistDat-method}
 \alias{as.ecdf,HistDat-method}
-\title{Convert this histogram to an instance of the "ecdf" class, allowing the
+\title{Converts this histogram to an instance of the "ecdf" class, allowing the
 calculation of cumulative densities, and quantiles}
 \usage{
 \S4method{as.ecdf}{HistDat}(x)
@@ -16,7 +16,7 @@ return the cumulative proportion of the count data less than or equal to
 \code{x}.
 }
 \description{
-Convert this histogram to an instance of the "ecdf" class, allowing the
+Converts this histogram to an instance of the "ecdf" class, allowing the
 calculation of cumulative densities, and quantiles
 }
 \examples{

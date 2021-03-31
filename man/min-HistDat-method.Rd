@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{min,HistDat-method}
 \alias{min,HistDat-method}
-\title{The smallest observation in the histogram dataset}
+\title{Calculates the smallest observation in the histogram dataset}
 \usage{
 \S4method{min}{HistDat}(x, ..., na.rm = FALSE)
 }
@@ -18,7 +18,7 @@ A numeric of length 1, holding the smallest observation in the
 dataset
 }
 \description{
-The smallest observation in the histogram dataset
+Calculates the smallest observation in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

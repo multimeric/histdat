@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{length,HistDat-method}
 \alias{length,HistDat-method}
-\title{The total number of observations in a histogram dataset}
+\title{Calculates the total number of observations in a histogram dataset}
 \usage{
 \S4method{length}{HistDat}(x)
 }
@@ -14,7 +14,7 @@ A numeric of length 1, holding the number of observations in the
 dataset
 }
 \description{
-The total number of observations in a histogram dataset
+Calculates the total number of observations in a histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

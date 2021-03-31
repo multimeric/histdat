@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{mean,HistDat-method}
 \alias{mean,HistDat-method}
-\title{The mean value of all observations in the histogram dataset}
+\title{Calculates the mean value of all observations in the histogram dataset}
 \usage{
 \S4method{mean}{HistDat}(x, ...)
 }
@@ -12,11 +12,11 @@
 \item{...}{Additional arguments that will be ignored}
 }
 \value{
-A numeric of length 1, holding the mean of the observationsin the
+A numeric of length 1, holding the mean of the observations in the
 dataset
 }
 \description{
-The mean value of all observations in the histogram dataset
+Calculates the mean value of all observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))

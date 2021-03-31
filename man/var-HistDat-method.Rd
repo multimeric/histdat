@@ -2,7 +2,7 @@
 % Please edit documentation in R/histogram.R
 \name{var,HistDat-method}
 \alias{var,HistDat-method}
-\title{The variance of observations in the histogram dataset}
+\title{Calculates the variance of observations in the histogram dataset}
 \usage{
 \S4method{var}{HistDat}(x, y = NULL, na.rm = FALSE, use)
 }
@@ -20,7 +20,7 @@ A numeric of length 1, holding the variance of all observations in
 the dataset
 }
 \description{
-The variance of observations in the histogram dataset
+Calculates the variance of observations in the histogram dataset
 }
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
