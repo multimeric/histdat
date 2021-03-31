@@ -3,35 +3,21 @@
 \docType{class}
 \name{HistDat-class}
 \alias{HistDat-class}
-\title{Calculates the sample standard deviation of a dataset.
-This is a generic version of  the core \code{sd} function.}
-\arguments{
-\item{x}{The object to coerce to a eCDF}
-
-\item{vals}{A vector of observations}
-
-\item{counts}{A vector of counts, each of which corresponds to the same
-index in the vals parameter}
-}
-\value{
-A length 1 vector holding the standard deviation
-
-A vector
-
-An instance of the "ecdf" class
-
-An instance of the hist_dat class
-}
+\alias{HistDat}
+\title{S4 class for histogram data}
 \description{
-Calculates the sample standard deviation of a dataset.
-This is a generic version of  the core \code{sd} function.
+S4 class for histogram data
 }
-\examples{
-sd(c(1, 2, 3))
-Converts an object to a vector.
-This is a generic version of the core `as.vector` function
+\section{Slots}{
 
-}
-\seealso{
-\code{\link[=ecdf]{ecdf()}}
+\describe{
+\item{\code{vals}}{A vector of observations}
+
+\item{\code{counts}}{A vector of counts, each of which corresponds to the same
+index in the vals parameter}
+}}
+
+\examples{
+hd = new("HistDat", vals=1:3, counts=c(1, 2, 1))
+length(hd) # returns 4
 }

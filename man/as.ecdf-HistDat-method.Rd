@@ -8,7 +8,7 @@ calculation of cumulative densities, and quantiles}
 \S4method{as.ecdf}{HistDat}(x)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
 }
 \value{
 An instance of the \code{ecdf} class. It can be invoked as a function to
@@ -20,6 +20,8 @@ Convert this histogram to an instance of the "ecdf" class, allowing the
 calculation of cumulative densities, and quantiles
 }
 \examples{
-as.ecdf(new("HistDat", vals=1:3, counts=c(1, 2, 1)))(2)
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+cdf = as.ecdf(hd)
+cdf(2) # returns 0.75
 
 }

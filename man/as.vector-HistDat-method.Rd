@@ -8,18 +8,19 @@ as this would result in an incredibly long vector}
 \S4method{as.vector}{HistDat}(x)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
 }
 \value{
 A vector with the same \code{length} as \code{x}, but as a 1-D vector with
-an element for each count in the counts vector. In other words, all \code{length(x)}
-elements will be represented as a single element instead ofbeing just counted as in the original
-HistDat object.
+an element for each count in the counts vector. In other words, all
+\code{length(x)} observations will be represented as a single element instead of
+being just counted as in the original HistDat object.
 }
 \description{
 Convert this histogram to a vector. Not recommended if there are many counts
 as this would result in an incredibly long vector
 }
 \examples{
-as.vector(new("HistDat", vals=1:3, counts=c(1, 2, 3)), 0.2)
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+as.vector(hd) # returns 1 2 2 3
 }

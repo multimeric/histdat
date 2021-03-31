@@ -1,5 +1,5 @@
 ---
-title: "histdat"
+title: "HistDat"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{histdat}
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 First we need to import the package:
 ```{r setup}
-library(histdat)
+library(HistDat)
 ```
 
 
@@ -27,7 +27,7 @@ we would have a vector of length 60,000! That would use a lot of RAM, and we
 don't really need to do that
 
 ```{r}
-h = hist_dat(
+h = HistDat(
   vals = 1:4,
   counts = c(10000, 20000, 20000, 10000)
 )
@@ -44,7 +44,7 @@ median(h)
 We actually *can* convert a `hist_dat` object into a 1-D vector, which is 
 reasonable if we only have a small number of counts:
 ```{r}
-h = hist_dat(
+h = HistDat(
   vals = 1:4,
   counts = c(1, 2, 2, 1)
 )

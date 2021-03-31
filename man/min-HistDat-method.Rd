@@ -2,19 +2,25 @@
 % Please edit documentation in R/histogram.R
 \name{min,HistDat-method}
 \alias{min,HistDat-method}
-\title{The minimum value in a histogram dataset}
+\title{The smallest observation in the histogram dataset}
 \usage{
 \S4method{min}{HistDat}(x, ..., na.rm = FALSE)
 }
 \arguments{
-\item{x}{An instance of the class his_dat
-min(new("HistDat", vals=1:3, counts=c(1, 2, 3)))}
+\item{x}{An instance of the class HistDat}
 
-\item{...}{Additional arguments to pass to \code{min()}}
+\item{...}{Passed verbatim to \code{\link[base:Extremes]{base::min()}}}
+
+\item{na.rm}{Passed verbatim to \code{\link[base:Extremes]{base::min()}}}
 }
 \value{
-A numeric of length 1
+A numeric of length 1, holding the smallest observation in the
+dataset
 }
 \description{
-The minimum value in a histogram dataset
+The smallest observation in the histogram dataset
+}
+\examples{
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+min(hd) # returns 1
 }

@@ -2,21 +2,23 @@
 % Please edit documentation in R/histogram.R
 \name{mean,HistDat-method}
 \alias{mean,HistDat-method}
-\title{The mean value in a histogram dataset}
+\title{The mean value of all observations in the histogram dataset}
 \usage{
-\S4method{mean}{HistDat}(x)
+\S4method{mean}{HistDat}(x, ...)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
 
 \item{...}{Additional arguments that will be ignored}
 }
 \value{
-A numeric of length 1
+A numeric of length 1, holding the mean of the observationsin the
+dataset
 }
 \description{
-The mean value in a histogram dataset
+The mean value of all observations in the histogram dataset
 }
 \examples{
-mean(new("HistDat", vals=1:3, counts=c(1, 2, 3)))
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+mean(hd) # returns 2
 }

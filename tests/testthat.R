@@ -1,4 +1,4 @@
 library(testthat)
-library(histdat)
+library(HistDat)
 
-test_check("histdat")
+test_check("HistDat")

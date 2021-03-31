@@ -7,16 +7,18 @@
 \S4method{quantile}{HistDat}(x, ...)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
 
 \item{...}{Additional arguments to pass to \code{quantile()}}
 }
 \value{
-A numeric with the same length as the probs parameter
+A numeric with the same length as the probs parameter, holding the
+quantile corresponding to each provided probability
 }
 \description{
 Calculates one or more empirical quantiles of the dataset
 }
 \examples{
-quantile(new("HistDat", vals=1:3, counts=c(1, 2, 3)), 0.2)
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+quantile(hd, 0.2) # returns 1.6
 }

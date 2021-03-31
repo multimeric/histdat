@@ -2,19 +2,27 @@
 % Please edit documentation in R/histogram.R
 \name{var,HistDat-method}
 \alias{var,HistDat-method}
-\title{The variance of a histogram dataset}
+\title{The variance of observations in the histogram dataset}
 \usage{
-\S4method{var}{HistDat}(x)
+\S4method{var}{HistDat}(x, y = NULL, na.rm = FALSE, use)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
+
+\item{y}{Provided for compatibility with \code{\link[stats:cor]{stats::var()}}, but ignored}
+
+\item{na.rm}{Provided for compatibility with \code{\link[stats:cor]{stats::var()}}, but ignored}
+
+\item{use}{Provided for compatibility with \code{\link[stats:cor]{stats::var()}}, but ignored}
 }
 \value{
-A numeric of length 1
+A numeric of length 1, holding the variance of all observations in
+the dataset
 }
 \description{
-The variance of a histogram dataset
+The variance of observations in the histogram dataset
 }
 \examples{
-var(new("HistDat", vals=1:3, counts=c(1, 2, 3)))
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+var(hd) # returns 0.6666667
 }

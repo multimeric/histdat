@@ -2,21 +2,21 @@
 % Please edit documentation in R/histogram.R
 \name{length,HistDat-method}
 \alias{length,HistDat-method}
-\title{The number of values in a histogram dataset}
+\title{The total number of observations in a histogram dataset}
 \usage{
 \S4method{length}{HistDat}(x)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
-
-\item{...}{Additional arguments that will be ignored}
+\item{x}{An instance of the class HistDat}
 }
 \value{
-A numeric of length 1
+A numeric of length 1, holding the number of observations in the
+dataset
 }
 \description{
-The number of values in a histogram dataset
+The total number of observations in a histogram dataset
 }
 \examples{
-length(new("HistDat", vals=1:3, counts=c(1, 2, 3)))
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+length(hd) # returns 4
 }

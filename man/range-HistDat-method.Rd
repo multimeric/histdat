@@ -2,21 +2,25 @@
 % Please edit documentation in R/histogram.R
 \name{range,HistDat-method}
 \alias{range,HistDat-method}
-\title{The range of values in a histogram dataset}
+\title{The range of values of the observations in the histogram dataset}
 \usage{
 \S4method{range}{HistDat}(x, ..., na.rm = FALSE)
 }
 \arguments{
-\item{x}{An instance of the class his_dat}
+\item{x}{An instance of the class HistDat}
 
 \item{...}{Additional arguments to pass to \code{range()}}
+
+\item{na.rm}{Passed verbatim to \code{\link[base:range]{base::range()}}}
 }
 \value{
-A numeric of length 2, indicating the minimum and maximum value
+A numeric of length 2, indicating the minimum and maximum value of
+the observations
 }
 \description{
-The range of values in a histogram dataset
+The range of values of the observations in the histogram dataset
 }
 \examples{
-range(new("HistDat", vals=1:3, counts=c(1, 2, 3)))
+hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+range(hd) # returns 1 3
 }
