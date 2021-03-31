@@ -23,6 +23,6 @@ the dataset
 The variance of observations in the histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 var(hd) # returns 0.6666667
 }

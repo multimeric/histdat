@@ -20,8 +20,7 @@ Convert this histogram to an instance of the "ecdf" class, allowing the
 calculation of cumulative densities, and quantiles
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
-cdf = as.ecdf(hd)
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+cdf <- as.ecdf(hd)
 cdf(2) # returns 0.75
-
 }

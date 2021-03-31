@@ -1,6 +1,6 @@
 test_that("histogram math is the same as regular math", {
-  h = HistDat::HistDat(vals = 1:4, counts = c(1, 2, 2, 1))
-  v = as.vector(h)
+  h <- HistDat::HistDat(vals = 1:4, counts = c(1, 2, 2, 1))
+  v <- as.vector(h)
 
   # First, check that converting to a vector works, as the rest of the tests
   # rely on this
@@ -20,8 +20,8 @@ test_that("histogram math is the same as regular math", {
     sd,
     range,
     function(x) as.ecdf(x)(3),
-    function(x) quantile(x, probs=0.5, names=F, type=2),
-    function(x) quantile(x, probs=0.2, names=F, type=2)
+    function(x) quantile(x, probs = 0.5, names = F, type = 2),
+    function(x) quantile(x, probs = 0.2, names = F, type = 2)
   )) {
     expect_equal(func(h), func(v))
   }

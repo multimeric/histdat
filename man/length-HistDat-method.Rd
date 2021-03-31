@@ -17,6 +17,6 @@ dataset
 The total number of observations in a histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 length(hd) # returns 4
 }

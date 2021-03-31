@@ -21,6 +21,6 @@ in the histogram dataset
 The median value of the observations in the histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 median(hd) # returns 2
 }

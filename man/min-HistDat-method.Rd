@@ -21,6 +21,6 @@ dataset
 The smallest observation in the histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 min(hd) # returns 1
 }

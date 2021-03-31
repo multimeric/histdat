@@ -19,6 +19,6 @@ quantile corresponding to each provided probability
 Calculates one or more empirical quantiles of the dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 quantile(hd, 0.2) # returns 1.6
 }

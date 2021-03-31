@@ -21,6 +21,6 @@ the observations
 The range of values of the observations in the histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 range(hd) # returns 1 3
 }

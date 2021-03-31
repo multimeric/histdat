@@ -17,6 +17,6 @@ observations in the dataset
 The standard deviation of the observations in the histogram dataset
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 sd(hd) # returns 0.8164966
 }

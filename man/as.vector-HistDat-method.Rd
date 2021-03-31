@@ -21,6 +21,6 @@ Convert this histogram to a vector. Not recommended if there are many counts
 as this would result in an incredibly long vector
 }
 \examples{
-hd = HistDat(vals=1:3, counts=c(1, 2, 1))
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 as.vector(hd) # returns 1 2 2 3
 }
