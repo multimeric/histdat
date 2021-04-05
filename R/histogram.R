@@ -315,6 +315,8 @@ setMethod("[", representation(x="HistDat"), function(x, i, j, ...) {
   x@vals[findInterval(i, cumsum(x@counts)), ...]
 })
 
+setClassUnion("HistDatCompatible", c("numeric", "HistDat"))
+
 #' Concatenate observations into this instance
 #'
 #' @param HistDat
@@ -323,12 +325,15 @@ setMethod("[", representation(x="HistDat"), function(x, i, j, ...) {
 #' @export
 #'
 #' @examples
-setMethod("c", representation(x="HistDat"), function(x, ...) {
+setMethod("c", "HistDatCompatible", function(x, ...) {
   browser()
-  vals = list(...)
+  vals = list(x, ...)
   cls = lapply(vals, class)
   hd_idx = which(cls == 'HistDat')
-  hd = vals[hd_idx]
+  if (length(hd_idx) > 1){
+    stop("Can only concat with at most 1 HistDat")
+  }
+  hd = vals[[hd_idx]]
   vals = hd@vals
   counts=hd@counts
 
