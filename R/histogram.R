@@ -90,14 +90,14 @@ HistDat <- methods::setClass("HistDat", slots=list(
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' sum(hd) # returns 8
 #' @export
-setMethod("sum", list(x = "HistDat"), function(x, ...) {
+#' @describeIn sum.HistDat The S4 version
+setMethod("sum", list(x = "HistDat"), function(x, ...){
   sum(x@vals * x@counts, ...)
 })
+# Has an S4 generic so doesn't need an S3 implementation
 
 #' Calculates the total number of observations in a histogram dataset
-#'
 #' @param x An instance of the class HistDat
-#'
 #' @return A numeric of length 1, holding the number of observations in the
 #' dataset
 #' @examples
@@ -107,6 +107,16 @@ setMethod("sum", list(x = "HistDat"), function(x, ...) {
 setMethod("length", list(x = "HistDat"), function(x) {
   sum(x@counts)
 })
+# Has an S4 generic so doesn't need an S3 implementation
+
+# mean doesn't have an S4 generic but it does have an S3 generic, so we
+# define it here
+#' @export
+#' @describeIn mean,HistDat-method S3 version, to retain compatibility with
+#' code that uses base::mean
+mean.HistDat = function(x, ...) {
+  sum(x) / length(x)
+}
 
 #' Calculates the mean value of all observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -117,9 +127,7 @@ setMethod("length", list(x = "HistDat"), function(x) {
 #' @return A numeric of length 1, holding the mean of the observations in the
 #' dataset
 #' @export
-setMethod("mean", list(x = "HistDat"), function(x, ...) {
-  sum(x) / length(x)
-})
+setMethod("mean", list(x = "HistDat"), mean.HistDat)
 
 #' Calculates the variance of observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -137,6 +145,7 @@ setMethod("var", list(x = "HistDat"), function(x, y, na.rm, use) {
   denom <- length(x) - 1
   num / denom
 })
+# var is not an S3 generic, so we have no need to define var.HistDat
 
 #' Calculates the standard deviation of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -149,6 +158,7 @@ setMethod("var", list(x = "HistDat"), function(x, y, na.rm, use) {
 setMethod("sd", list(x = "HistDat"), function(x) {
   sqrt(var(x))
 })
+# sd is not an S3 generic, so we have no need to define var.HistDat
 
 #' Calculates the smallest observation in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -163,6 +173,7 @@ setMethod("sd", list(x = "HistDat"), function(x) {
 setMethod("min", list(x = "HistDat"), function(x, ...) {
   min(x@vals, ...)
 })
+# Has an S4 generic so doesn't need an S3 implementation
 
 #' Calculates the largest observation in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -176,6 +187,14 @@ setMethod("min", list(x = "HistDat"), function(x, ...) {
 setMethod("max", list(x = "HistDat"), function(x, ...) {
   max(x@vals, ...)
 })
+# Has an S4 generic so doesn't need an S3 implementation
+
+#' @export
+#' @describeIn median,HistDat-method S3 version, to retain compatibility with
+#' code that uses stats::median
+median.HistDat = function(x, ...) {
+  quantile(x, probs = 0.5, names = F)
+}
 
 #' Calculates the median value of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -187,9 +206,7 @@ setMethod("max", list(x = "HistDat"), function(x, ...) {
 #' @return A numeric of length 1, holding the median value of the observations
 #' in the histogram dataset
 #' @export
-setMethod("median", list(x = "HistDat"), function(x, ...) {
-  quantile(x, probs = 0.5, names = F)
-})
+setMethod("median", list(x = "HistDat"), median.HistDat)
 
 #' Calculates the range of values of the observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -206,66 +223,11 @@ setMethod("range", list(x = "HistDat"), function(x, ...) {
 })
 
 # Make it explicit that quantile.default works on this class
-setMethod("quantile", list(x = "HistDat"), stats:::quantile.default)
-
-#' Calculates one or more empirical quantiles of the dataset
-# @param x An instance of the class HistDat
-# @param ... Additional arguments to pass to `quantile()`
-# @examples
-#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
-#' quantile(hd, 0.2) # returns 1.6
-# @return A numeric with the same length as the probs parameter, holding the
-#' quantile corresponding to each provided probability
-# @export
-# setMethod("quantile", list(x = "HistDat"), function(x, probs, type, ...) {
-#   # Output vector
-#   quants = vector(mode='numeric', length=length(probs))
-#   # The number of counts we have seen so far
-#   cumul = 0
-#   # Index of the quantile we're up to
-#   quant_idx = 1
-#
-#   n = length(x)
-#
-#   browser()
-#   for (i in c(0, 1:length(x@counts))){
-#     if (i == 0){
-#       count = x@counts[[1]]
-#       val = x@vals[[1]]
-#     }
-#     else {
-#       count = x@counts[[i]]
-#       val = x@vals[[i]]
-#     }
-#
-#     for (idx in quant_idx:length(probs)){
-#       # The current index in the theoretical expanded array we are looking for
-#       p = probs[[idx]]
-#       m = switch (type, 0, 0, -1/2, 0, 1/2, p, 1-p, (p+1)/3, p/4 + 3/8)
-#
-#       j = floor(n * p + m)
-#       g = n * p + m - j
-#       gamma = switch(type,
-#                      ifelse(g==0, 0, 1),
-#                      ifelse(g==0, 0.5, 1),
-#                      ifelse(g==0 && j %% 2 == 0, 0, 1),
-#                      g, g, g, g, g, g
-#                      )
-#
-#       if (p >= (cumul / n) && p < (cumul + count) / n){
-#         quants[[idx]] = (1-gamma) * val + gamma * x@vals[i+1]
-#         quant_idx = quant_idx + 1
-#         if (quant_idx > length(probs)){
-#           return(quants)
-#         }
-#       }
-#       else {
-#         break
-#       }
-#     }
-#     cumul = cumul + count
-#   }
-# })
+setMethod("quantile", list(x = "HistDat"), function(x, ...){
+  suppressWarnings(
+  stats:::quantile.default(x, ...)
+  )
+})
 
 #' Converts this histogram to a vector. Not recommended if there are many counts
 #' as this would result in an incredibly long vector
@@ -311,39 +273,52 @@ setMethod("as.ecdf", list(x = "HistDat"), function(x) {
   st
 })
 
-#' Title
-#'
-#' @param x HistDat.
-#'
-#' @return
+#' Index the histogram data
+#' @param x An instance of the class HistDat
+#' @return The observations that would be returned if you flattened the
+#' array and then indexed it
 #' @export
-#'
 setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
   indices = findInterval(i, cumsum(c(1, x@counts)))
   x@vals[indices, ...]
 })
 
+#' A
 #' @export
 setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 
 #' Concatenate observations into this instance
-#'
-#' @param HistDat
-#'
-#' @return
+#' @param x The first value to concatenate
+#' @param ... The remaining values to concatenate
+#' @return A new HistDat object, with the other numeric values integrated into
+#' it
 #' @export
-#'
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' hd_2 = c(1, 1, hd)
+#' hd@counts # returns 1 2 1
+#' hd_2@counts # returns 3 2 1, as the first value now has 2 more counts
+#' hd_2@vals # returns 1 2 3 (this is unchanged)
 setMethod("c", "HistDatCompatible", function(x, ...) {
   tocat = list(x, ...)
+
+  # Find the index of any HistDat entries in this vector
   cls = lapply(tocat, class)
   hd_idx = which(cls == 'HistDat')
-  if (length(hd_idx) > 1){
+
+  if (length(hd_idx) == 0){
+    # If we have no HistDat, concat them as normal
+    return(base::c(x, ...))
+  }
+  else if (length(hd_idx) > 1){
     stop("Can only concat with at most 1 HistDat")
   }
+
+  # Pull out the fields from that HistDat
   hd = tocat[[hd_idx]]
   vals = hd@vals
   counts=hd@counts
 
+  # For each concatenated variable, add them as counts
   for (val in tocat[-hd_idx]){
     existing_idx = which(vals == val)
     if (existing_idx){
@@ -355,36 +330,30 @@ setMethod("c", "HistDatCompatible", function(x, ...) {
     }
   }
 
+  # Rebuild a new HistDat from the updated counts
   HistDat(vals=vals, counts=counts)
 })
 
 
-#' Title
-#'
-#' @param x
-#' @param decreasing
-#' @param ...
-#'
-#' @return
 #' @export
 #' @method sort HistDat
-#'
+#' @describeIn sort,HistDat-method S3 version, to retain compatibility with
+#' code that uses base::sort
 sort.HistDat = function(x, decreasing=F, ...){
   if (decreasing){
     stop("This is a dummy method. Decreasing sort is not available")
   }
 
-  warning('This is a dummy method, a HistDat entry is already sorted')
-
   x
 }
 
-#' Title
-#'
-#' @param x HistDat.
-#'
-#' @return
+#' This is a dummy method so that sort can be applied to HistDat entries
+#' (including the S3 version base::sort). However it does nothing, because
+#' the values in a HistDat are sorted at the time of creation.
+#' @param x HistDat A HistDat instance
+#' @return The same HistDat instance, completely unchanged
 #' @export
-#'
 #' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' sort(hd) # returns `hd` verbatim
 setMethod("sort", list(x="HistDat"), sort.HistDat)

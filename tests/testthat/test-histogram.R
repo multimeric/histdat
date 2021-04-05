@@ -1,14 +1,14 @@
 # These functions will be the same when the counts are multiplied by the
 # same coefficient
 count_independent_funcs = c(
-  # min,
-  # max,
-  # mean,
-  # median,
-  # var,
-  # sd,
-  # range,
-  # function(x) as.ecdf(x)(3),
+  min,
+  max,
+  mean,
+  median,
+  var,
+  sd,
+  range,
+  function(x) as.ecdf(x)(3),
   function(x) quantile(x, probs = seq(0, 1, 0.1), names = F, type = 2)
 )
 
