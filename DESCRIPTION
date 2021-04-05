@@ -1,7 +1,7 @@
 Package: HistDat
 Type: Package
 Title: Summary Statistics for Histogram/Count Data
-Version: 0.1.0
+Version: 0.2.0
 Author: Michael Milton
 Maintainer: Michael Milton <michael.r.milton@gmail.com>
 Description: In some cases you will have data in a histogram format, where

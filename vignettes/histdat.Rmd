@@ -20,16 +20,18 @@ library(HistDat)
 ```
 
 
-Now, let's say that we have seen the number one 10,000 times, the number two 20,000 times etc.
+Now, let's say that we have seen the number one 1000 billion times, the number 
+two twice that, the number three the same as two, and the number four the same
+number of times as one.
 
 If we turned this into a single vector with the true number of each observation,
-we would have a vector of length 60,000! That would use a lot of RAM, and we
-don't really need to do that
+we would have a vector of length 6,000,000,000,000! It seems unlikely that this
+would even fit into RAM, and if it did, calculations would be very difficult.
 
 ```{r}
 h = HistDat(
   vals = 1:4,
-  counts = c(10000, 20000, 20000, 10000)
+  counts = c(1e12, 2e12, 2e12, 1e12)
 )
 ```
 

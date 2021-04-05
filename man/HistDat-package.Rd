@@ -43,6 +43,14 @@ to equally apply these same functions to any type of data.
 \section{\code{HistDat} Utilities}{
 \itemize{
 \item \link{as.vector,HistDat-method}
+\item [\link{,HistDat-method}
+\item \link{c,HistDat-method}
+}
+}
+
+\section{Misc Functions}{
+\itemize{
+\item \code{\link[=as.ecdf]{as.ecdf()}}
 }
 }
 

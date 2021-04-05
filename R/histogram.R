@@ -29,6 +29,12 @@
 #' @details
 #' # `HistDat` Utilities
 #' * [as.vector,HistDat-method]
+#' * [[,HistDat-method]
+#' * [c,HistDat-method]
+#'
+#' @details
+#' # Misc Functions
+#' * [as.ecdf()]
 #'
 #' @details
 #' Note that all the methods described for `HistDat` instances have been
@@ -109,16 +115,16 @@ setMethod("length", list(x = "HistDat"), function(x) {
 })
 # Has an S4 generic so doesn't need an S3 implementation
 
-# mean doesn't have an S4 generic but it does have an S3 generic, so we
-# define it here
 #' @export
-#' @describeIn mean,HistDat-method S3 version, to retain compatibility with
-#' code that uses base::mean
+#' @method mean HistDat
 mean.HistDat = function(x, ...) {
   sum(x) / length(x)
 }
 
 #' Calculates the mean value of all observations in the histogram dataset
+#' @details An S3 and and S4 generic is defined for this method, allowing
+#' compatibility with existing code that calls [base::mean()] instead of
+#' `[mean()]`, which is defined as an S4 generic in this package
 #' @param x An instance of the class HistDat
 #' @param ... Additional arguments that will be ignored
 #' @examples
@@ -190,13 +196,15 @@ setMethod("max", list(x = "HistDat"), function(x, ...) {
 # Has an S4 generic so doesn't need an S3 implementation
 
 #' @export
-#' @describeIn median,HistDat-method S3 version, to retain compatibility with
-#' code that uses stats::median
+#' @method median HistDat
 median.HistDat = function(x, ...) {
   quantile(x, probs = 0.5, names = F)
 }
 
 #' Calculates the median value of the observations in the histogram dataset
+#' @details An S3 and and S4 generic is defined for this method, allowing
+#' compatibility with existing code that calls [stats::median()] instead of
+#' median, which is defined as an S4 generic in this package
 #' @param x An instance of the class HistDat
 #' @param na.rm Provided for compatibility with [stats::median()], but ignored
 #' @param ... Additional arguments that will be ignored
@@ -278,6 +286,11 @@ setMethod("as.ecdf", list(x = "HistDat"), function(x) {
 #' @return The observations that would be returned if you flattened the
 #' array and then indexed it
 #' @export
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' hd[1] # returns 1
+#' hd[2] # returns 2
+#' hd[3] # returns 2
 setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
   indices = findInterval(i, cumsum(c(1, x@counts)))
   x@vals[indices, ...]
@@ -293,6 +306,7 @@ setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 #' @return A new HistDat object, with the other numeric values integrated into
 #' it
 #' @export
+#' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' hd_2 = c(1, 1, hd)
 #' hd@counts # returns 1 2 1
@@ -321,7 +335,7 @@ setMethod("c", "HistDatCompatible", function(x, ...) {
   # For each concatenated variable, add them as counts
   for (val in tocat[-hd_idx]){
     existing_idx = which(vals == val)
-    if (existing_idx){
+    if (length(existing_idx) > 0){
       counts[[existing_idx]] = counts[[existing_idx]] + 1
     }
     else {
@@ -334,11 +348,8 @@ setMethod("c", "HistDatCompatible", function(x, ...) {
   HistDat(vals=vals, counts=counts)
 })
 
-
 #' @export
 #' @method sort HistDat
-#' @describeIn sort,HistDat-method S3 version, to retain compatibility with
-#' code that uses base::sort
 sort.HistDat = function(x, decreasing=F, ...){
   if (decreasing){
     stop("This is a dummy method. Decreasing sort is not available")
@@ -348,8 +359,11 @@ sort.HistDat = function(x, decreasing=F, ...){
 }
 
 #' This is a dummy method so that sort can be applied to HistDat entries
-#' (including the S3 version base::sort). However it does nothing, because
-#' the values in a HistDat are sorted at the time of creation.
+#' However it does nothing, because the values in a HistDat are sorted at the
+#' time of creation.
+#' @details An S3 and and S4 generic is defined for this method, allowing
+#' compatibility with existing code that calls [base::sort()] instead of
+#' `[sort()]`, which is defined as an S4 generic in this package
 #' @param x HistDat A HistDat instance
 #' @return The same HistDat instance, completely unchanged
 #' @export

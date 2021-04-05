@@ -20,6 +20,11 @@ in the histogram dataset
 \description{
 Calculates the median value of the observations in the histogram dataset
 }
+\details{
+An S3 and and S4 generic is defined for this method, allowing
+compatibility with existing code that calls \code{\link[stats:median]{stats::median()}} instead of
+median, which is defined as an S4 generic in this package
+}
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 median(hd) # returns 2

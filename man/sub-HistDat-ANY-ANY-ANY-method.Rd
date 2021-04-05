@@ -2,16 +2,23 @@
 % Please edit documentation in R/histogram.R
 \name{[,HistDat,ANY,ANY,ANY-method}
 \alias{[,HistDat,ANY,ANY,ANY-method}
-\title{Title}
+\title{Index the histogram data}
 \usage{
 \S4method{[}{HistDat,ANY,ANY,ANY}(x, i, j, ..., drop = TRUE)
 }
 \arguments{
-\item{x}{HistDat.}
+\item{x}{An instance of the class HistDat}
 }
 \value{
-
+The observations that would be returned if you flattened the
+array and then indexed it
 }
 \description{
-Title
+Index the histogram data
+}
+\examples{
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+hd[1] # returns 1
+hd[2] # returns 2
+hd[3] # returns 2
 }
