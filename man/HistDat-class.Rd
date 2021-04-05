@@ -3,7 +3,6 @@
 \docType{class}
 \name{HistDat-class}
 \alias{HistDat-class}
-\alias{HistDat}
 \title{S4 class for histogram data}
 \description{
 S4 class for histogram data
@@ -17,8 +16,3 @@ S4 class for histogram data
 index in the vals parameter}
 }}
 
-\examples{
-hd <- new("HistDat", vals = 1:3, counts = c(1, 2, 1))
-hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
-length(hd) # returns 4
-}

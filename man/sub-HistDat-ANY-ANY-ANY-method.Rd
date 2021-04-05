@@ -2,12 +2,17 @@
 % Please edit documentation in R/histogram.R
 \name{[,HistDat,ANY,ANY,ANY-method}
 \alias{[,HistDat,ANY,ANY,ANY-method}
+\alias{[,HistDat-method}
 \title{Index the histogram data}
 \usage{
 \S4method{[}{HistDat,ANY,ANY,ANY}(x, i, j, ..., drop = TRUE)
 }
 \arguments{
 \item{x}{An instance of the class HistDat}
+
+\item{i}{A vector of indices to find in the sorted array of observations}
+
+\item{j, drop, ...}{Included for compatibility, but ignored}
 }
 \value{
 The observations that would be returned if you flattened the

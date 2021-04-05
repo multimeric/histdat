@@ -29,8 +29,8 @@
 #' @details
 #' # `HistDat` Utilities
 #' * [as.vector,HistDat-method]
-#' * [[,HistDat-method]
-#' * [c,HistDat-method]
+#' * [`[`,HistDat-method]
+#' * [c,HistDatCompatible-method]
 #'
 #' @details
 #' # Misc Functions
@@ -65,12 +65,8 @@ methods::setGeneric("as.ecdf", def = stats::ecdf)
 #' @slot vals A vector of observations
 #' @slot counts A vector of counts, each of which corresponds to the same
 #' index in the vals parameter
-#' @examples
-#' hd <- new("HistDat", vals = 1:3, counts = c(1, 2, 1))
-#' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
-#' length(hd) # returns 4
 #' @export
-HistDat <- methods::setClass("HistDat", slots=list(
+methods::setClass("HistDat", slots=list(
   vals = "numeric",
   counts = "numeric"
 ), validity = function(object) {
@@ -86,6 +82,21 @@ HistDat <- methods::setClass("HistDat", slots=list(
     TRUE
   }
 })
+
+#' The constructor function for the HistDat class. This is the only official way
+#' to create an instance of this class.
+#' @export
+#' @param vals A vector of observation values, ie all the possible values that
+#' could be observed
+#' @param counts A vector of counts, each of which corresponds to the same
+#' index in the vals parameter
+#' @examples
+#' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
+#' length(hd) # returns 4
+HistDat = function(vals, counts){
+  sorted = sort(vals, index.return=T)
+  new("HistDat", vals=sorted$x, counts=counts[sorted$ix])
+}
 
 #' Calculates the sum of all observations in the histogram dataset
 #' @param x An instance of the class HistDat
@@ -230,10 +241,18 @@ setMethod("range", list(x = "HistDat"), function(x, ...) {
   range(x@vals, ...)
 })
 
-# Make it explicit that quantile.default works on this class
+#' Returns the empirical quantiles of the observations represented by this
+#' class
+#' @param x An instance of the class HistDat
+#' @param ... Remaining arguments to pass to [stats::quantile()]
+#' @inherit stats::quantile return
+#' @export
+#' @examples
+#' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+#' quantile(hd, 0.1) # returns 1.3
 setMethod("quantile", list(x = "HistDat"), function(x, ...){
   suppressWarnings(
-  stats:::quantile.default(x, ...)
+   stats::quantile(x, ...)
   )
 })
 
@@ -283,9 +302,13 @@ setMethod("as.ecdf", list(x = "HistDat"), function(x) {
 
 #' Index the histogram data
 #' @param x An instance of the class HistDat
+#' @param i A vector of indices to find in the sorted array of observations
+#' @param j,drop,... Included for compatibility, but ignored
 #' @return The observations that would be returned if you flattened the
 #' array and then indexed it
 #' @export
+#' @method [ HistDat
+#' @aliases [,HistDat-method
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' hd[1] # returns 1
@@ -296,8 +319,6 @@ setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
   x@vals[indices, ...]
 })
 
-#' A
-#' @export
 setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 
 #' Concatenate observations into this instance
@@ -365,6 +386,9 @@ sort.HistDat = function(x, decreasing=F, ...){
 #' compatibility with existing code that calls [base::sort()] instead of
 #' `[sort()]`, which is defined as an S4 generic in this package
 #' @param x HistDat A HistDat instance
+#' @param decreasing If TRUE, this function will fail, as the observations are
+#' sorted in ascending order by default and this cannot be changed
+#' @param ... Additional arguments allowed for compatibility that will be ignored
 #' @return The same HistDat instance, completely unchanged
 #' @export
 #' @examples

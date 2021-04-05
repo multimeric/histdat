@@ -78,3 +78,9 @@ test_that("The c operator behaves correctly", {
   expect_equal(h2@vals, c(1, 2, 3, 4, 6))
   expect_equal(h2@counts, c(2, 2, 3, 1, 1))
 })
+
+test_that("The constructor function performs the right transformations", {
+  h <- HistDat::HistDat(vals = c(1, 3, 4, 2), counts = c(1, 2, 1, 2))
+  expect_equal(h@vals, c(1, 2, 3, 4))
+  expect_equal(h@counts, c(1, 2, 2, 1))
+})

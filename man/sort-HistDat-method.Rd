@@ -10,6 +10,11 @@ time of creation.}
 }
 \arguments{
 \item{x}{HistDat A HistDat instance}
+
+\item{decreasing}{If TRUE, this function will fail, as the observations are
+sorted in ascending order by default and this cannot be changed}
+
+\item{...}{Additional arguments allowed for compatibility that will be ignored}
 }
 \value{
 The same HistDat instance, completely unchanged

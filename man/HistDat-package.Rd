@@ -43,8 +43,8 @@ to equally apply these same functions to any type of data.
 \section{\code{HistDat} Utilities}{
 \itemize{
 \item \link{as.vector,HistDat-method}
-\item [\link{,HistDat-method}
-\item \link{c,HistDat-method}
+\item [\code{[},HistDat-method]
+\item \link{c,HistDatCompatible-method}
 }
 }
 
