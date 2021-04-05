@@ -7,11 +7,21 @@
 \S4method{c}{HistDatCompatible}(x, ...)
 }
 \arguments{
-\item{HistDat}{}
+\item{x}{The first value to concatenate}
+
+\item{...}{The remaining values to concatenate}
 }
 \value{
-
+A new HistDat object, with the other numeric values integrated into
+it
 }
 \description{
 Concatenate observations into this instance
+}
+\examples{
+hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
+hd_2 = c(1, 1, hd)
+hd@counts # returns 1 2 1
+hd_2@counts # returns 3 2 1, as the first value now has 2 more counts
+hd_2@vals # returns 1 2 3 (this is unchanged)
 }

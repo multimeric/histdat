@@ -18,6 +18,11 @@ dataset
 \description{
 Calculates the mean value of all observations in the histogram dataset
 }
+\details{
+An S3 and and S4 generic is defined for this method, allowing
+compatibility with existing code that calls \code{\link[base:mean]{base::mean()}} instead of
+\verb{[mean()]}, which is defined as an S4 generic in this package
+}
 \examples{
 hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 mean(hd) # returns 2
