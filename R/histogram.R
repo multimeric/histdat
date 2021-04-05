@@ -205,6 +205,9 @@ setMethod("range", signature(x = "HistDat"), function(x, ...) {
   range(x@vals, ...)
 })
 
+# Make it explicit that quantile.default works on this class
+setMethod("quantile", signature(x = "HistDat"), stats:::quantile.default)
+
 #' Calculates one or more empirical quantiles of the dataset
 #' @param x An instance of the class HistDat
 #' @param ... Additional arguments to pass to `quantile()`
@@ -214,10 +217,55 @@ setMethod("range", signature(x = "HistDat"), function(x, ...) {
 #' @return A numeric with the same length as the probs parameter, holding the
 #' quantile corresponding to each provided probability
 #' @export
-setMethod("quantile", signature(x = "HistDat"), function(x, ...) {
-  cdf <- as.ecdf(x)
-  quantile(cdf, ...)
-})
+# setMethod("quantile", signature(x = "HistDat"), function(x, probs, type, ...) {
+#   # Output vector
+#   quants = vector(mode='numeric', length=length(probs))
+#   # The number of counts we have seen so far
+#   cumul = 0
+#   # Index of the quantile we're up to
+#   quant_idx = 1
+#
+#   n = length(x)
+#
+#   browser()
+#   for (i in c(0, 1:length(x@counts))){
+#     if (i == 0){
+#       count = x@counts[[1]]
+#       val = x@vals[[1]]
+#     }
+#     else {
+#       count = x@counts[[i]]
+#       val = x@vals[[i]]
+#     }
+#
+#     for (idx in quant_idx:length(probs)){
+#       # The current index in the theoretical expanded array we are looking for
+#       p = probs[[idx]]
+#       m = switch (type, 0, 0, -1/2, 0, 1/2, p, 1-p, (p+1)/3, p/4 + 3/8)
+#
+#       j = floor(n * p + m)
+#       g = n * p + m - j
+#       gamma = switch(type,
+#                      ifelse(g==0, 0, 1),
+#                      ifelse(g==0, 0.5, 1),
+#                      ifelse(g==0 && j %% 2 == 0, 0, 1),
+#                      g, g, g, g, g, g
+#                      )
+#
+#       if (p >= (cumul / n) && p < (cumul + count) / n){
+#         quants[[idx]] = (1-gamma) * val + gamma * x@vals[i+1]
+#         quant_idx = quant_idx + 1
+#         if (quant_idx > length(probs)){
+#           return(quants)
+#         }
+#       }
+#       else {
+#         break
+#       }
+#     }
+#     cumul = cumul + count
+#   }
+# })
 
 #' Converts this histogram to a vector. Not recommended if there are many counts
 #' as this would result in an incredibly long vector
@@ -262,3 +310,72 @@ setMethod("as.ecdf", signature(x = "HistDat"), function(x) {
   assign("nobs", length(x), envir = environment(st))
   st
 })
+
+setMethod("[", representation(x="HistDat"), function(x, i, j, ...) {
+  x@vals[findInterval(i, cumsum(x@counts)), ...]
+})
+
+#' Concatenate observations into this instance
+#'
+#' @param HistDat
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setMethod("c", representation(x="HistDat"), function(x, ...) {
+  browser()
+  vals = list(...)
+  cls = lapply(vals, class)
+  hd_idx = which(cls == 'HistDat')
+  hd = vals[hd_idx]
+  vals = hd@vals
+  counts=hd@counts
+
+  for (val in vals[-hd_idx]){
+    existing_idx = which(vals == val)
+    if (existing_idx){
+      counts[[existing_idx]] = counts[[existing_idx]] + 1
+    }
+    else {
+      vals = c(vals, val)
+      counts = c(counts, 1)
+    }
+  }
+
+  HistDat(vals=vals, counts=counts)
+})
+
+c.HistDat = function(...){
+  browser()
+  vals = list(...)
+  cls = lapply(vals, class)
+  hd_idx = which(cls == 'HistDat')
+  hd = vals[hd_idx]
+  vals = hd@vals
+  counts=hd@counts
+
+  for (val in vals[-hd_idx]){
+    existing_idx = which(vals == val)
+    if (existing_idx){
+      counts[[existing_idx]] = counts[[existing_idx]] + 1
+    }
+    else {
+      vals = c(vals, val)
+      counts = c(counts, 1)
+    }
+  }
+
+}
+
+sort.HistDat = function(x, decreasing=F, ...){
+  if (decreasing){
+    stop("This is a dummy method. Decreasing sort is not available")
+  }
+
+  warning('This is a dummy method, a HistDat entry is already sorted')
+
+  x
+}
+
+setMethod("sort", signature(x="HistDat"), sort.HistDat)
