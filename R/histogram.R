@@ -64,7 +64,7 @@ methods::setGeneric("as.ecdf", def = stats::ecdf)
 #' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
 #' length(hd) # returns 4
 #' @export
-HistDat <- methods::setClass("HistDat", representation(
+HistDat <- methods::setClass("HistDat", slots=list(
   vals = "numeric",
   counts = "numeric"
 ), validity = function(object) {
@@ -90,7 +90,7 @@ HistDat <- methods::setClass("HistDat", representation(
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' sum(hd) # returns 8
 #' @export
-setMethod("sum", signature(x = "HistDat"), function(x, ...) {
+setMethod("sum", list(x = "HistDat"), function(x, ...) {
   sum(x@vals * x@counts, ...)
 })
 
@@ -104,7 +104,7 @@ setMethod("sum", signature(x = "HistDat"), function(x, ...) {
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' length(hd) # returns 4
 #' @export
-setMethod("length", signature(x = "HistDat"), function(x) {
+setMethod("length", list(x = "HistDat"), function(x) {
   sum(x@counts)
 })
 
@@ -117,7 +117,7 @@ setMethod("length", signature(x = "HistDat"), function(x) {
 #' @return A numeric of length 1, holding the mean of the observations in the
 #' dataset
 #' @export
-setMethod("mean", signature(x = "HistDat"), function(x, ...) {
+setMethod("mean", list(x = "HistDat"), function(x, ...) {
   sum(x) / length(x)
 })
 
@@ -132,7 +132,7 @@ setMethod("mean", signature(x = "HistDat"), function(x, ...) {
 #' @return A numeric of length 1, holding the variance of all observations in
 #' the dataset
 #' @export
-setMethod("var", signature(x = "HistDat"), function(x, y, na.rm, use) {
+setMethod("var", list(x = "HistDat"), function(x, y, na.rm, use) {
   num <- sum((x@vals - mean(x))^2 * x@counts)
   denom <- length(x) - 1
   num / denom
@@ -146,7 +146,7 @@ setMethod("var", signature(x = "HistDat"), function(x, y, na.rm, use) {
 #' @return A numeric of length 1, holding the standard deviation of all
 #' observations in the dataset
 #' @export
-setMethod("sd", signature(x = "HistDat"), function(x) {
+setMethod("sd", list(x = "HistDat"), function(x) {
   sqrt(var(x))
 })
 
@@ -160,7 +160,7 @@ setMethod("sd", signature(x = "HistDat"), function(x) {
 #' @return A numeric of length 1, holding the smallest observation in the
 #' dataset
 #' @export
-setMethod("min", signature(x = "HistDat"), function(x, ...) {
+setMethod("min", list(x = "HistDat"), function(x, ...) {
   min(x@vals, ...)
 })
 
@@ -173,7 +173,7 @@ setMethod("min", signature(x = "HistDat"), function(x, ...) {
 #' max(hd) # returns 3
 #' @return A numeric of length 1, holding the largest observation in the dataset
 #' @export
-setMethod("max", signature(x = "HistDat"), function(x, ...) {
+setMethod("max", list(x = "HistDat"), function(x, ...) {
   max(x@vals, ...)
 })
 
@@ -187,7 +187,7 @@ setMethod("max", signature(x = "HistDat"), function(x, ...) {
 #' @return A numeric of length 1, holding the median value of the observations
 #' in the histogram dataset
 #' @export
-setMethod("median", signature(x = "HistDat"), function(x, ...) {
+setMethod("median", list(x = "HistDat"), function(x, ...) {
   quantile(x, probs = 0.5, names = F)
 })
 
@@ -201,23 +201,23 @@ setMethod("median", signature(x = "HistDat"), function(x, ...) {
 #' @return A numeric of length 2, indicating the minimum and maximum value of
 #' the observations
 #' @export
-setMethod("range", signature(x = "HistDat"), function(x, ...) {
+setMethod("range", list(x = "HistDat"), function(x, ...) {
   range(x@vals, ...)
 })
 
 # Make it explicit that quantile.default works on this class
-setMethod("quantile", signature(x = "HistDat"), stats:::quantile.default)
+setMethod("quantile", list(x = "HistDat"), stats:::quantile.default)
 
 #' Calculates one or more empirical quantiles of the dataset
-#' @param x An instance of the class HistDat
-#' @param ... Additional arguments to pass to `quantile()`
-#' @examples
+# @param x An instance of the class HistDat
+# @param ... Additional arguments to pass to `quantile()`
+# @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' quantile(hd, 0.2) # returns 1.6
-#' @return A numeric with the same length as the probs parameter, holding the
+# @return A numeric with the same length as the probs parameter, holding the
 #' quantile corresponding to each provided probability
-#' @export
-# setMethod("quantile", signature(x = "HistDat"), function(x, probs, type, ...) {
+# @export
+# setMethod("quantile", list(x = "HistDat"), function(x, probs, type, ...) {
 #   # Output vector
 #   quants = vector(mode='numeric', length=length(probs))
 #   # The number of counts we have seen so far
@@ -281,7 +281,7 @@ setMethod("quantile", signature(x = "HistDat"), stats:::quantile.default)
 #' as.vector(hd) # returns 1 2 2 3
 #' @export
 #'
-setMethod("as.vector", signature(x = "HistDat"), function(x) {
+setMethod("as.vector", list(x = "HistDat"), function(x) {
   rep(x@vals, x@counts)
 })
 
@@ -300,7 +300,7 @@ setMethod("as.vector", signature(x = "HistDat"), function(x) {
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' cdf <- as.ecdf(hd)
 #' cdf(2) # returns 0.75
-setMethod("as.ecdf", signature(x = "HistDat"), function(x) {
+setMethod("as.ecdf", list(x = "HistDat"), function(x) {
   st <- stepfun(
     x = x@vals,
     y = c(0, cumsum(x@counts)) / length(x),
@@ -311,11 +311,20 @@ setMethod("as.ecdf", signature(x = "HistDat"), function(x) {
   st
 })
 
-setMethod("[", representation(x="HistDat"), function(x, i, j, ...) {
-  x@vals[findInterval(i, cumsum(x@counts)), ...]
+#' Title
+#'
+#' @param x HistDat.
+#'
+#' @return
+#' @export
+#'
+setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
+  indices = findInterval(i, cumsum(c(1, x@counts)))
+  x@vals[indices, ...]
 })
 
-setClassUnion("HistDatCompatible", c("numeric", "HistDat"))
+#' @export
+setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 
 #' Concatenate observations into this instance
 #'
@@ -324,20 +333,18 @@ setClassUnion("HistDatCompatible", c("numeric", "HistDat"))
 #' @return
 #' @export
 #'
-#' @examples
 setMethod("c", "HistDatCompatible", function(x, ...) {
-  browser()
-  vals = list(x, ...)
-  cls = lapply(vals, class)
+  tocat = list(x, ...)
+  cls = lapply(tocat, class)
   hd_idx = which(cls == 'HistDat')
   if (length(hd_idx) > 1){
     stop("Can only concat with at most 1 HistDat")
   }
-  hd = vals[[hd_idx]]
+  hd = tocat[[hd_idx]]
   vals = hd@vals
   counts=hd@counts
 
-  for (val in vals[-hd_idx]){
+  for (val in tocat[-hd_idx]){
     existing_idx = which(vals == val)
     if (existing_idx){
       counts[[existing_idx]] = counts[[existing_idx]] + 1
@@ -351,28 +358,17 @@ setMethod("c", "HistDatCompatible", function(x, ...) {
   HistDat(vals=vals, counts=counts)
 })
 
-c.HistDat = function(...){
-  browser()
-  vals = list(...)
-  cls = lapply(vals, class)
-  hd_idx = which(cls == 'HistDat')
-  hd = vals[hd_idx]
-  vals = hd@vals
-  counts=hd@counts
 
-  for (val in vals[-hd_idx]){
-    existing_idx = which(vals == val)
-    if (existing_idx){
-      counts[[existing_idx]] = counts[[existing_idx]] + 1
-    }
-    else {
-      vals = c(vals, val)
-      counts = c(counts, 1)
-    }
-  }
-
-}
-
+#' Title
+#'
+#' @param x
+#' @param decreasing
+#' @param ...
+#'
+#' @return
+#' @export
+#' @method sort HistDat
+#'
 sort.HistDat = function(x, decreasing=F, ...){
   if (decreasing){
     stop("This is a dummy method. Decreasing sort is not available")
@@ -383,4 +379,12 @@ sort.HistDat = function(x, decreasing=F, ...){
   x
 }
 
-setMethod("sort", signature(x="HistDat"), sort.HistDat)
+#' Title
+#'
+#' @param x HistDat.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setMethod("sort", list(x="HistDat"), sort.HistDat)
