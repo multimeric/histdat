@@ -1,6 +1,6 @@
 # These functions will not be affected if all when the counts are multiplied by the
 # same coefficient
-count_independent_funcs = c(
+count_independent_funcs <- c(
   min,
   max,
   mean,
@@ -13,14 +13,14 @@ count_independent_funcs = c(
 # These functions will not be the same when the counts are multiplied by the
 # same coefficient, but if we divide these stats by that coefficient, we can
 # recover the original statistic
-count_multiplied_funcs = c(
+count_multiplied_funcs <- c(
   length,
   sum
 )
 
 # These functions are totally dependent on the count, so we can never compare
 # these functions between datasets with different counts
-count_dependent_funcs = c(
+count_dependent_funcs <- c(
   function(x) x[1:5],
   function(x) x[2],
   var,
@@ -67,8 +67,8 @@ test_that("HistDat works with massive counts", {
 
 test_that("The c operator behaves correctly", {
   h <- HistDat::HistDat(vals = 1:4, counts = c(1, 2, 2, 1))
-  h2 = c(1, 3, 6, h)
-  h3 = c(h, 1, 3, 6)
+  h2 <- c(1, 3, 6, h)
+  h3 <- c(h, 1, 3, 6)
 
   # The order of concatenation shouldn't matter
   expect_equal(h2@vals, h3@vals)

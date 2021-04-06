@@ -67,7 +67,7 @@ methods::setGeneric("as.ecdf", def = stats::ecdf)
 #' @slot counts A vector of counts, each of which corresponds to the same
 #' index in the vals parameter
 #' @export
-methods::setClass("HistDat", slots=list(
+methods::setClass("HistDat", slots = list(
   vals = "numeric",
   counts = "numeric"
 ), validity = function(object) {
@@ -94,9 +94,9 @@ methods::setClass("HistDat", slots=list(
 #' @examples
 #' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' length(hd) # returns 4
-HistDat = function(vals, counts){
-  sorted = sort(vals, index.return=T)
-  new("HistDat", vals=sorted$x, counts=counts[sorted$ix])
+HistDat <- function(vals, counts) {
+  sorted <- sort(vals, index.return = T)
+  new("HistDat", vals = sorted$x, counts = counts[sorted$ix])
 }
 
 #' Calculates the sum of all observations in the histogram dataset
@@ -109,7 +109,7 @@ HistDat = function(vals, counts){
 #' sum(hd) # returns 8
 #' @export
 #' @describeIn sum.HistDat The S4 version
-setMethod("sum", list(x = "HistDat"), function(x, ...){
+setMethod("sum", list(x = "HistDat"), function(x, ...) {
   sum(x@vals * x@counts, ...)
 })
 # Has an S4 generic so doesn't need an S3 implementation
@@ -129,7 +129,7 @@ setMethod("length", list(x = "HistDat"), function(x) {
 
 #' @export
 #' @method mean HistDat
-mean.HistDat = function(x, ...) {
+mean.HistDat <- function(x, ...) {
   sum(x) / length(x)
 }
 
@@ -209,7 +209,7 @@ setMethod("max", list(x = "HistDat"), function(x, ...) {
 
 #' @export
 #' @method median HistDat
-median.HistDat = function(x, ...) {
+median.HistDat <- function(x, ...) {
   quantile(x, probs = 0.5, names = F)
 }
 
@@ -251,9 +251,9 @@ setMethod("range", list(x = "HistDat"), function(x, ...) {
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' quantile(hd, 0.1) # returns 1.3
-setMethod("quantile", list(x = "HistDat"), function(x, ...){
+setMethod("quantile", list(x = "HistDat"), function(x, ...) {
   suppressWarnings(
-   stats::quantile(x, ...)
+    stats::quantile(x, ...)
   )
 })
 
@@ -315,8 +315,8 @@ setMethod("as.ecdf", list(x = "HistDat"), function(x) {
 #' hd[1] # returns 1
 #' hd[2] # returns 2
 #' hd[3] # returns 2
-setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
-  indices = findInterval(i, cumsum(c(1, x@counts)))
+setMethod("[", list(x = "HistDat"), function(x, i, j, ...) {
+  indices <- findInterval(i, cumsum(c(1, x@counts)))
   x@vals[indices, ...]
 })
 
@@ -332,50 +332,50 @@ setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 #' @export
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
-#' hd_2 = c(1, 1, hd)
+#' hd_2 <- c(1, 1, hd)
 #' hd@counts # returns 1 2 1
 #' hd_2@counts # returns 3 2 1, as the first value now has 2 more counts
 #' hd_2@vals # returns 1 2 3 (this is unchanged)
 setMethod("c", "HistDatCompatible", function(x, ...) {
-  tocat = list(x, ...)
+  tocat <- list(x, ...)
 
   # Find the index of any HistDat entries in this vector
-  cls = lapply(tocat, class)
-  hd_idx = which(cls == 'HistDat')
+  cls <- lapply(tocat, class)
+  hd_idx <- which(cls == "HistDat")
 
-  if (length(hd_idx) == 0){
+  if (length(hd_idx) == 0) {
     # If we have no HistDat, concat them as normal
     return(base::c(x, ...))
   }
-  else if (length(hd_idx) > 1){
+  else if (length(hd_idx) > 1) {
     stop("Can only concat with at most 1 HistDat")
   }
 
   # Pull out the fields from that HistDat
-  hd = tocat[[hd_idx]]
-  vals = hd@vals
-  counts=hd@counts
+  hd <- tocat[[hd_idx]]
+  vals <- hd@vals
+  counts <- hd@counts
 
   # For each concatenated variable, add them as counts
-  for (val in tocat[-hd_idx]){
-    existing_idx = which(vals == val)
-    if (length(existing_idx) > 0){
-      counts[[existing_idx]] = counts[[existing_idx]] + 1
+  for (val in tocat[-hd_idx]) {
+    existing_idx <- which(vals == val)
+    if (length(existing_idx) > 0) {
+      counts[[existing_idx]] <- counts[[existing_idx]] + 1
     }
     else {
-      vals = c(vals, val)
-      counts = c(counts, 1)
+      vals <- c(vals, val)
+      counts <- c(counts, 1)
     }
   }
 
   # Rebuild a new HistDat from the updated counts
-  HistDat(vals=vals, counts=counts)
+  HistDat(vals = vals, counts = counts)
 })
 
 #' @export
 #' @method sort HistDat
-sort.HistDat = function(x, decreasing=F, ...){
-  if (decreasing){
+sort.HistDat <- function(x, decreasing = F, ...) {
+  if (decreasing) {
     stop("This is a dummy method. Decreasing sort is not available")
   }
 
@@ -397,4 +397,4 @@ sort.HistDat = function(x, decreasing=F, ...){
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' sort(hd) # returns `hd` verbatim
-setMethod("sort", list(x="HistDat"), sort.HistDat)
+setMethod("sort", list(x = "HistDat"), sort.HistDat)
