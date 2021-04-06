@@ -18,9 +18,10 @@ transformed into generic methods in this package where they are not already,
 with default implementations for general numeric vectors. This allows you
 to equally apply these same functions to any type of data.
 }
-\section{Class Definition / Constructor Function}{
+\section{Class Definition and Constructor Function}{
 \itemize{
 \item \linkS4class{HistDat}
+\item \code{\link[=HistDat]{HistDat()}}
 }
 }
 

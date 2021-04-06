@@ -19,6 +19,6 @@ The constructor function for the HistDat class. This is the only official way
 to create an instance of this class.
 }
 \examples{
-hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
+hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1))
 length(hd) # returns 4
 }

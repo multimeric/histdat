@@ -19,10 +19,9 @@ First we need to import the package:
 library(HistDat)
 ```
 
-
 Now, let's say that we have seen the number one 1000 billion times, the number 
-two twice that, the number three the same as two, and the number four the same
-number of times as one.
+two 2000 billion times, the number three also 2000 billion times, and the number
+four 1000 billion times.
 
 If we turned this into a single vector with the true number of each observation,
 we would have a vector of length 6,000,000,000,000! It seems unlikely that this

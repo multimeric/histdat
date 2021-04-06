@@ -9,8 +9,9 @@
 #' for expanding your data.
 #'
 #' @details
-#' # Class Definition / Constructor Function
+#' # Class Definition and Constructor Function
 #' * [HistDat-class]
+#' * [HistDat()]
 #'
 #' @details
 #' # `HistDat` Statistics
@@ -91,7 +92,7 @@ methods::setClass("HistDat", slots=list(
 #' @param counts A vector of counts, each of which corresponds to the same
 #' index in the vals parameter
 #' @examples
-#' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1)) # equivalent to above
+#' hd <- HistDat::HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' length(hd) # returns 4
 HistDat = function(vals, counts){
   sorted = sort(vals, index.return=T)
