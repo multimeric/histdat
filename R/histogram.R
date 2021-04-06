@@ -29,8 +29,8 @@
 #' @details
 #' # `HistDat` Utilities
 #' * [as.vector,HistDat-method]
-#' * [`[`,HistDat-method]
-#' * [c,HistDatCompatible-method]
+#' * \link{[,HistDat-method}
+#' * [c,HistDat-method]
 #'
 #' @details
 #' # Misc Functions
@@ -308,7 +308,7 @@ setMethod("as.ecdf", list(x = "HistDat"), function(x) {
 #' array and then indexed it
 #' @export
 #' @method [ HistDat
-#' @aliases [,HistDat-method
+#' @aliases [,HistDat-method sub,HistDat-method
 #' @examples
 #' hd <- HistDat(vals = 1:3, counts = c(1, 2, 1))
 #' hd[1] # returns 1
@@ -322,6 +322,8 @@ setMethod("[", list(x="HistDat"), function(x, i, j, ...) {
 setClassUnion("HistDatCompatible", list("numeric", "HistDat"))
 
 #' Concatenate observations into this instance
+#' @name c,HistDat-method
+#' @aliases c,HistDatCompatible-method
 #' @param x The first value to concatenate
 #' @param ... The remaining values to concatenate
 #' @return A new HistDat object, with the other numeric values integrated into

@@ -3,6 +3,7 @@
 \name{[,HistDat,ANY,ANY,ANY-method}
 \alias{[,HistDat,ANY,ANY,ANY-method}
 \alias{[,HistDat-method}
+\alias{sub,HistDat-method}
 \title{Index the histogram data}
 \usage{
 \S4method{[}{HistDat,ANY,ANY,ANY}(x, i, j, ..., drop = TRUE)

@@ -12,4 +12,4 @@
 ## Changed
 
 * Previously the `quantile()` method actually flattened the entire observation vector which crashed R in situations with high counts. This is now fixed.
-
+* Ensure that the vals vector is sorted upon callind `HistDat::HistDat()`.

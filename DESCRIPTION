@@ -16,7 +16,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    unix
 Config/testthat/edition: 3
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
